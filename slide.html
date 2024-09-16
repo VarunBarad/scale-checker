@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slide slider</title>
+</head>
+<body style="font-family: sans-serif; margin: 0;">
+<div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+  <button id="button-back">Back</button>
+  <iframe
+      id="slides"
+      src="https://slides.com/abhi_qweebi/roller-coaster/embed?byline=hidden&share=hidden#/0"
+      title="Roller Coaster - Teacher Slides"
+      scrolling="no"
+      frameborder="0"
+      webkitallowfullscreen
+      mozallowfullscreen
+      allowfullscreen
+      style="
+        flex-grow: 1;
+        height: 100%;
+      "></iframe>
+  <button id="button-next">Next</button>
+</div>
+
+<script>
+  const constructSlideUrl = (slideNumber) => {
+    return `https://slides.com/abhi_qweebi/roller-coaster/embed?byline=hidden&share=hidden#/${slideNumber}`;
+  };
+  
+  const main = () => {
+    let currentSlideNumber = 0;
+    
+    const buttonBack = document.getElementById('button-back');
+    const buttonNext = document.getElementById('button-next');
+    const slides = document.getElementById('slides');
+    
+    buttonBack.addEventListener('click', () => {
+      if (currentSlideNumber > 0) {
+        currentSlideNumber -= 1;
+        slides.src = constructSlideUrl(currentSlideNumber);
+      }
+    });
+    buttonNext.addEventListener('click', () => {
+      if (currentSlideNumber < 6) {
+        currentSlideNumber += 1;
+        slides.src = constructSlideUrl(currentSlideNumber);
+      }
+    });
+  };
+  window.addEventListener('load', main);
+</script>
+</body>
+</html>
