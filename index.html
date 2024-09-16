@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scale checker</title>
+</head>
+<body style="font-family: sans-serif;">
+<div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+  <p id="text-target" style="font-size: 5rem;">
+    Varun x Janki
+  </p>
+</div>
+
+<script>
+  const main = () => {
+    const textTargetElement = document.getElementById('text-target');
+    
+    textTargetElement.innerText = `${window.innerWidth} x ${window.innerHeight}`;
+    window.addEventListener('resize', (event) => {
+      textTargetElement.innerText = `${window.innerWidth} x ${window.innerHeight}`;
+    });
+  };
+  window.addEventListener('load', main);
+</script>
+</body>
+</html>
