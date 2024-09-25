@@ -1,0 +1,32 @@
+name: Release the latest commit
+
+on:
+  schedule:
+    - cron: '00,10,20,30,40,50 * * * *' # Runs every 10 minutes
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Build Environment'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+          - development
+          - release
+      debugBuild:
+        description: 'Create a DEBUG build for manual uploading'
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    name: Release `main` to ${{ github.event.inputs.env }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Echo everything
+        run: |
+          echo 'Tag: ' ${{ github.event.inputs.tag }}
+          echo 'Env: ' ${{ github.event.inputs.env }}
+          echo 'Build: ' ${{ github.event.inputs.debugBuild }}
