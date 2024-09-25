@@ -27,6 +27,6 @@ jobs:
     steps:
       - name: Echo everything
         run: |
-          echo 'Tag: ' ${{ github.event.inputs.tag }}
+          echo 'Tag: ' ${{ github.event.inputs.tag || 'something' }}
           echo 'Env: ' ${{ github.event.inputs.env }}
           echo 'Build: ' ${{ github.event.inputs.debugBuild }}
