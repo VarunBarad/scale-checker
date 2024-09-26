@@ -1,0 +1,13 @@
+name: Deploy on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  output_stuff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Qweebi web app (Release ${{ github.event.release.tag_name }})
+        run: |
+          echo ${{ github.ref }}
