@@ -14,15 +14,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Generate release description
-        id: generate_description
-        run: |
-          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^)
-          DESCRIPTION=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s")
-          echo "description<<EOF" >> $GITHUB_OUTPUT
-          echo "$DESCRIPTION" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
       - name: Create Release
         uses: softprops/action-gh-release@v2
         env:
@@ -30,6 +21,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: ${{ steps.generate_description.outputs.description }}
+          body: Some manually written text
           draft: false
           prerelease: false
