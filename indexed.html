@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Indexed DB Tester</title>
+</head>
+<body style="font-family: sans-serif;">
+<div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+  <button onclick="clickHandlerDeleteDatabase()">Delete database</button>
+  <button onclick="clickHandlerOpenDatabase()">Open database</button>
+  <button onclick="clickHandlerAddRecord()">Add record</button>
+</div>
+
+<script>
+  const hashOfPath = 'df88dcbc2ab500a9d96d93772a7ef0cd';
+  
+  const clickHandlerDeleteDatabase = () => {
+    if (!!db) {
+      db.close();
+    }
+    let request = indexedDB.deleteDatabase(`/idbfs`);
+    request.onsuccess = (event) => {
+      console.log('Deleted database.', event);
+    };
+    request.onblocked = (event) => {
+      console.log('Database delete blocked.', event);
+    };
+    request.onerror = (event) => {
+      console.log('Database delete errored.', event);
+    };
+    request.onupgradeneeded = (event) => {
+      console.log('Database delete upgrade needed.', event);
+    };
+  };
+  
+  let db;
+  const clickHandlerOpenDatabase = () => {
+    let request = indexedDB.open(`/idbfs`);
+    request.onsuccess = (event) => {
+      db = event.target.result;
+      console.log('Got the database connection');
+    };
+    request.onblocked = (event) => {
+      console.log('Database open blocked.', event);
+    };
+    request.onerror = (event) => {
+      console.log('Database open errored.', event);
+    };
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      const objectStore = db.createObjectStore('FILE_DATA');
+      console.log('Database open upgrade needed.', event);
+    };
+  };
+  
+  const clickHandlerAddRecord = () => {
+    db.transaction('FILE_DATA', 'readwrite')
+        .objectStore('FILE_DATA')
+        .add({
+          'varun': 'some content goes here',
+        }, `/idbfs/${hashOfPath}/varun/preferences.json`);
+  };
+  
+  const main = () => {
+  
+  };
+  window.addEventListener('load', main);
+</script>
+</body>
+</html>
