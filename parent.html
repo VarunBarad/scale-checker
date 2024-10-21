@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Comms - Parent</title>
+</head>
+<body style="font-family: sans-serif;">
+<div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+  <button onclick="clickHandlerSendMessage()">Send message to child</button>
+<iframe id="iframeChild" src="http://localhost:8000/child.html" style=""></iframe>
+</div>
+
+
+<script>
+  const iframeChild = document.getElementById('iframeChild');
+  
+  const clickHandlerSendMessage = () => {
+    iframeChild.contentWindow.postMessage('Parent sending a message', 'http://localhost:8000');
+  };
+  
+  window.addEventListener('message', (event) => {
+    console.log('Message received in parent:', event.data);
+  });
+  
+  const main = () => {
+  
+  };
+  window.addEventListener('load', main);
+</script>
+</body>
+</html>

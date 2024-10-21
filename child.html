@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Comms - Parent</title>
+</head>
+<body style="font-family: sans-serif;">
+<div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+  <button onclick="clickHandlerSendMessage()">Send message to parent</button>
+</div>
+
+<script>
+  const clickHandlerSendMessage = () => {
+    window.parent.postMessage('Message sent from child to parent.', 'http://localhost:4000');
+  };
+  
+  window.addEventListener('message', (event) => {
+    console.dir(event);
+    console.log('Message received in child:', event.data);
+  });
+  
+  const main = () => {
+  
+  };
+  window.addEventListener('load', main);
+</script>
+</body>
+</html>
