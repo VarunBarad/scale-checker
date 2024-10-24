@@ -15,7 +15,7 @@
   const iframeChild = document.getElementById('iframeChild');
   
   const clickHandlerSendMessage = () => {
-    iframeChild.contentWindow.postMessage('Parent sending a message', 'http://localhost:8000');
+    iframeChild.contentWindow.postMessage({'varun': 'Parent sending a message'}, 'http://localhost:8000');
   };
   
   window.addEventListener('message', (event) => {
