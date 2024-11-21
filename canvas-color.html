@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas Color</title>
+</head>
+<body style="font-family: sans-serif; margin: 0;">
+<div style="display: flex; align-items: center; justify-content: center; height: 100vh; background-color: #1f1f1f;">
+  <canvas id="unityCanvas" width="800" height="600"></canvas>
+</div>
+
+
+<script>
+  const main = () => {
+    const canvas = document.getElementById('unityCanvas');
+    const gl = canvas.getContext('webgl2');
+    
+    // Ensure the context is available
+    if (!gl) {
+      console.error('WebGL2 is not supported by your browser.');
+      return;
+    }
+
+    // Set up your rendering (clear color, draw objects, etc.)
+    gl.clearColor(0.9, 0.4, 0.6, 1.0); // Example color
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    // Dimensions of the canvas
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Array to hold the pixel data (RGBA for all pixels)
+    const pixelData = new Uint8Array(width * height * 4); // 4 components per pixel
+
+    // Read all pixels from the canvas
+    gl.readPixels(
+        0, 0,               // Starting coordinates (bottom-left corner)
+        width, height,      // Dimensions of the canvas
+        gl.RGBA,            // Format of the pixel data
+        gl.UNSIGNED_BYTE,   // Data type of each component
+        pixelData           // Output array
+    );
+
+    // Set to store unique RGB colors
+    const uniqueColors = new Set();
+
+    // Iterate over each pixel
+    for (let i = 0; i < pixelData.length; i += 4) {
+      const r = pixelData[i];
+      const g = pixelData[i + 1];
+      const b = pixelData[i + 2];
+      const a = pixelData[i + 3];
+      
+      // Store the color as a string "r,g,b"
+      uniqueColors.add(`${r},${g},${b},${a}`);
+    }
+
+    // Print all unique colors
+    console.log("Unique colors in the canvas:");
+    for (const color of uniqueColors) {
+      console.log(`rgb(${color})`);
+    }
+  };
+  window.addEventListener('load', main);
+</script>
+</body>
+</html>
